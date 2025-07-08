@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Course not found or inactive.");
         }
 
-        // Insert enrollment record
+        // Insert enrollment record (enrollment_id will auto-increment)
         $stmt = $pdo->prepare("INSERT INTO ENROLLMENT (student_id, course_code, semester_id, enrollment_date, status) VALUES (?, ?, ?, CURDATE(), 'enrolled')");
         $stmt->execute([$student_id, $course_code, $semester_id]);
 
@@ -46,18 +46,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Registration Confirmation</title>
+    <title>Registration Confirmation - EduPortal</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-white text-black min-h-screen p-6 flex items-center justify-center">
-    <div class="max-w-lg w-full bg-gray-50 p-8 rounded-lg shadow text-center">
-        <h1 class="text-3xl font-semibold mb-6">Registration Confirmation</h1>
-        <p class="mb-6"><?= $message ?></p>
-        <a href="index.php" class="inline-block bg-black text-white py-2 px-6 rounded hover:bg-gray-800 transition">Back to Courses</a>
+<body class="bg-gray-50 min-h-screen p-6 flex items-center justify-center">
+    <div class="max-w-lg w-full bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">Registration Successful!</h1>
+        <p class="text-gray-600 mb-8"><?= $message ?></p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="course_page.php" class="bg-gray-900 text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition font-medium">
+                Browse More Courses
+            </a>
+            <a href="index.php" class="border border-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-50 transition font-medium">
+                Back to Home
+            </a>
+        </div>
     </div>
 </body>
 </html>
